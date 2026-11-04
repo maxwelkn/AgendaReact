@@ -52,7 +52,13 @@ export default function FormularioContacto({ onGuardar }) {
 
   return (
     <section className="panel form-panel" aria-labelledby="form-title">
-      <h2 id="form-title">Agregar a la agenda</h2>
+      <div className="panel-heading">
+        <span className="panel-icon" aria-hidden="true">+</span>
+        <div>
+          <p className="section-label">NUEVO CONTACTO</p>
+          <h2 id="form-title">Agregar a la agenda</h2>
+        </div>
+      </div>
       <p className="panel-description">Completa los tres campos para guardar el contacto.</p>
       <form onSubmit={enviarContacto} aria-busy={guardando}>
         <div className="field">

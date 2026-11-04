@@ -50,19 +50,38 @@ export default function Agenda() {
   }
 
   return (
-    <main>
-      <h1>Agenda de contactos</h1>
-      <p>Programación Web · Tarea 4 · React</p>
-      <FormularioContacto onGuardar={agregarContacto} />
-      <ListaContactos
-        contactos={contactos}
-        cargando={cargando}
-        consultado={consultado}
-        error={error}
-        busqueda={busqueda}
-        onBuscar={setBusqueda}
-        onActualizar={actualizarContactos}
-      />
-    </main>
+    <>
+      <header className="site-header">
+        <div className="header-inner">
+          <a className="brand" href="./" aria-label="Agenda, inicio">
+            <span className="brand-mark" aria-hidden="true">A</span>
+            <span>Agenda<span className="brand-dot">.</span></span>
+          </a>
+          <span className="course-label">Programación Web · Tarea 4</span>
+        </div>
+      </header>
+
+      <main className="page">
+        <div className="intro">
+          <span className="eyebrow">AGENDA REACT</span>
+          <h1>Personas a un clic de distancia.</h1>
+          <p>Consulta los contactos guardados y agrega uno nuevo con su nombre, apellido y teléfono.</p>
+        </div>
+        <div className="workspace">
+          <FormularioContacto onGuardar={agregarContacto} />
+          <ListaContactos
+            contactos={contactos}
+            cargando={cargando}
+            consultado={consultado}
+            error={error}
+            busqueda={busqueda}
+            onBuscar={setBusqueda}
+            onActualizar={actualizarContactos}
+          />
+        </div>
+      </main>
+
+      <footer className="site-footer">Agenda de contactos · Programación Web</footer>
+    </>
   )
 }
