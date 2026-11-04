@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { obtenerContactos } from '../services/agenda.js'
+import { guardarContacto, obtenerContactos } from '../services/agenda.js'
 import FormularioContacto from './FormularioContacto.jsx'
 import ListaContactos from './ListaContactos.jsx'
 
@@ -37,11 +37,22 @@ export default function Agenda() {
     return () => consultaActual.current?.abort()
   }, [cargarContactos])
 
+  function actualizarContactos() {
+    setCargando(true)
+    setError('')
+    return cargarContactos()
+  }
+
+  async function agregarContacto(contacto) {
+    await guardarContacto(contacto)
+    return actualizarContactos()
+  }
+
   return (
     <main>
       <h1>Agenda de contactos</h1>
       <p>Programación Web · Tarea 4 · React</p>
-      <FormularioContacto />
+      <FormularioContacto onGuardar={agregarContacto} />
       <ListaContactos
         contactos={contactos}
         cargando={cargando}
