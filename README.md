@@ -11,7 +11,7 @@ Tarea 4 de Programación Web. Esta tarea consiste en rehacer la agenda anterior 
 - Asignatura: Programación Web.
 - Tarea: 4 — Agenda React.
 
-## Estado actual
+## Cómo funciona
 
 La agenda está implementada con React, JavaScript y Vite. El componente padre `Agenda` coordina la consulta y el guardado; `FormularioContacto` controla los campos y el envío, y `ListaContactos` muestra los contactos y los controles de búsqueda y actualización.
 
@@ -21,11 +21,25 @@ La agenda está implementada con React, JavaScript y Vite. El componente padre `
 - Muestra estados de carga, agenda vacía, búsqueda sin resultados y errores. Durante el guardado se bloquean los campos y el botón para evitar envíos duplicados.
 - Conserva el diseño adaptable de la tarea anterior. Los datos se guardan en el servicio compartido, no en el navegador.
 
-Se comprobaron 11 escenarios en Edge con respuestas simuladas, incluidos los errores de consulta y guardado, el JSON enviado, el bloqueo de duplicados, la búsqueda, el uso básico con teclado y la vista móvil de 390 px. No se enviaron contactos reales ni se verificó en esta revisión la disponibilidad del servicio externo. También pasaron el análisis de código y la compilación. Las capturas de entrega y la revisión final de documentación quedan para la siguiente sección.
+El padre pasa los datos y las acciones mediante props. El listado recibe los contactos, la búsqueda y los estados de consulta; el formulario recibe la función `onGuardar` y avisa al padre cuando se envía un contacto. No se manipula el DOM manualmente para construir la interfaz.
+
+Se necesita conexión a Internet para consultar y guardar. Si el servicio no está disponible, la página muestra un error y permite intentar de nuevo con **Actualizar lista**.
+
+## Vista de la aplicación
+
+Estas son capturas reales de la aplicación compilada, ejecutada en Edge con **respuestas simuladas y datos de demostración**. No muestran teléfonos de la agenda compartida. Al abrir la aplicación normalmente, se consulta el servicio real.
+
+**Escritorio**
+
+![Agenda React en escritorio con formulario y listado de demostración](img/agenda-escritorio.png)
+
+**Móvil**
+
+<img src="img/agenda-movil.png" alt="Agenda React en móvil con formulario y listado de demostración" width="390">
 
 ## Cómo ejecutarla
 
-Se necesita Node.js y npm. La base se verificó con Node.js 24.19.0 y npm 11.17.0.
+Se necesita Node.js y npm. El proyecto se verificó con Node.js 24.19.0 y npm 11.17.0.
 
 Desde la raíz del proyecto:
 
@@ -60,10 +74,20 @@ AgendaReact/
 │       └── agenda.js           Peticiones al servicio de contactos
 ├── css/
 │   └── styles.css              Diseño y adaptación a móvil
+├── img/
+│   ├── agenda-escritorio.png    Captura de escritorio
+│   └── agenda-movil.png         Captura de móvil
+├── README.md                   Descripción e instrucciones
 ├── package.json               Dependencias y comandos
 ├── package-lock.json          Versiones de las dependencias
 ├── vite.config.js             Configuración de Vite
 └── .oxlintrc.json              Configuración del análisis de código
 ```
 
-Las capturas se agregarán en `img/` cuando la interfaz esté terminada y revisada. Las dependencias instaladas y la carpeta `dist/` de compilación se excluyen de Git.
+Las dependencias instaladas y la carpeta `dist/` de compilación se excluyen de Git.
+
+## Comprobaciones
+
+El análisis de código y la compilación terminaron correctamente. Sobre la compilación de producción se comprobaron 11 escenarios en Edge con respuestas simuladas: carga inicial, agenda vacía, búsqueda, consulta fallida y reintento, formato de respuesta inválido, normalización de datos y contenido escapado, campos obligatorios, guardado y bloqueo de duplicados, envío fallido y reintento, guardado con recarga fallida, y diseño adaptable con navegación básica por teclado.
+
+Se revisaron las vistas de escritorio y móvil de 390 px, sin desbordamiento horizontal. En una consulta GET real durante la revisión final, el servicio respondió con HTTP 200 y la aplicación mostró los contactos. Los envíos POST se probaron únicamente con respuestas simuladas; no se insertaron contactos de prueba en la agenda compartida. El resultado del GET corresponde a esa revisión y puede cambiar si el servicio deja de estar disponible.
