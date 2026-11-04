@@ -1,8 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import Agenda from './components/Agenda.jsx'
+import '../css/styles.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <h1>Agenda React</h1>
+    <Agenda />
   </StrictMode>,
 )
