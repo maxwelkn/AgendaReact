@@ -8,6 +8,7 @@ export default function Agenda() {
   const [cargando, setCargando] = useState(true)
   const [consultado, setConsultado] = useState(false)
   const [error, setError] = useState('')
+  const [busqueda, setBusqueda] = useState('')
   const consultaActual = useRef(null)
 
   const cargarContactos = useCallback(() => {
@@ -58,6 +59,9 @@ export default function Agenda() {
         cargando={cargando}
         consultado={consultado}
         error={error}
+        busqueda={busqueda}
+        onBuscar={setBusqueda}
+        onActualizar={actualizarContactos}
       />
     </main>
   )
