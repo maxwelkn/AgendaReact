@@ -10,24 +10,26 @@ export default function Agenda() {
   const [error, setError] = useState('')
   const consultaActual = useRef(null)
 
-  const cargarContactos = useCallback(async () => {
+  const cargarContactos = useCallback(() => {
     consultaActual.current?.abort()
     const controlador = new AbortController()
     consultaActual.current = controlador
-    try {
-      const datos = await obtenerContactos(controlador.signal)
-      if (controlador.signal.aborted) return false
-      setContactos(datos)
-      setConsultado(true)
-      return true
-    } catch {
-      if (!controlador.signal.aborted) {
-        setError('No se pudieron cargar los contactos. Intenta actualizar la lista.')
-      }
-      return false
-    } finally {
-      if (!controlador.signal.aborted) setCargando(false)
-    }
+    return obtenerContactos(controlador.signal)
+      .then((datos) => {
+        if (controlador.signal.aborted) return false
+        setContactos(datos)
+        setConsultado(true)
+        return true
+      })
+      .catch(() => {
+        if (!controlador.signal.aborted) {
+          setError('No se pudieron cargar los contactos. Intenta actualizar la lista.')
+        }
+        return false
+      })
+      .finally(() => {
+        if (!controlador.signal.aborted) setCargando(false)
+      })
   }, [])
 
   useEffect(() => {
