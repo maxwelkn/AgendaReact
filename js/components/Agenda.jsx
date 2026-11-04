@@ -14,9 +14,6 @@ export default function Agenda() {
     consultaActual.current?.abort()
     const controlador = new AbortController()
     consultaActual.current = controlador
-    setCargando(true)
-    setError('')
-
     try {
       const datos = await obtenerContactos(controlador.signal)
       if (controlador.signal.aborted) return false
